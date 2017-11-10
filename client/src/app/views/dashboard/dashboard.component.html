@@ -1,0 +1,142 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong>Algoritmos de Clasificación</strong>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="executionForm" (ngSubmit)="doExecution()" novalidate>
+        <div class="card-group">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">1. Dataset</h4>
+              <div class="input-group mb-3">
+                <span class="input-group-addon">
+                  <i class="fa fa-database"></i>
+                </span>
+                <select class="form-control" formControlName="dataset">
+                  <option *ngFor="let dataset of datasets" [value]="dataset">
+                    {{ dataset }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-9 form-control-label" for="has_header">Tiene encabezado:</label>
+                <div class="col-md-3">
+                  <div class="input-group mb-0">
+                    <label class="switch switch-text switch-pill switch-info">
+                      <input type="checkbox" class="switch-input" formControlName="has_header">
+                      <span class="switch-label" data-on="Sí" data-off="No"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-9 form-control-label" for="class_col">Columna de Clase:</label>
+                <div class="col-md-3">
+                  <input
+                    class="form-control"
+                    formControlName="class_col"
+                    placeholder=""
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">2. Configuración de Algoritmos</h4>
+
+              <div class="form-group row">
+                <label class="col-md-9 form-control-label" for="normalization">Normalizacion:</label>
+                <div class="col-md-3">
+                  <div class="input-group mb-0">
+                    <label class="switch switch-text switch-pill switch-info">
+                      <input type="checkbox" class="switch-input" formControlName="normalization">
+                      <span class="switch-label" data-on="Sí" data-off="No"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-9 form-control-label" for="paralelization">Paralelizacion:</label>
+                <div class="col-md-3">
+                  <div class="input-group mb-0">
+                    <label class="switch switch-text switch-pill switch-info">
+                      <input type="checkbox" class="switch-input" formControlName="paralelization">
+                      <span class="switch-label" data-on="Sí" data-off="No"></span>
+                      <span class="switch-handle"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-8 form-control-label" for="cores">Cores:</label>
+                <div class="col-md-4">
+                  <input
+                    class="form-control"
+                    formControlName="cores"
+                    placeholder=""
+                  >
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-8 form-control-label" for="sampling">Método de Muestreo:</label>
+                <div class="col-md-4">
+                  <select class="form-control" formControlName="sampling">
+                    <option *ngFor="let sampling of samplingMethods" [value]="sampling">
+                      {{ sampling }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Seleccione los algoritmos a ejecutar:</label>
+                <select multiple class="form-control" formControlName="algorithms">
+                  <option *ngFor="let algorithm of algorithms" [value]="algorithm">
+                    {{ algorithm }}
+                  </option>
+                </select>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">3. Ejecución</h4>
+              <p class="card-text">Presione el botón para ejecutar los algoritmos.</p>
+              <!--
+              <button type="button" class="btn btn-primary" (click)="executeAlgorithms()">Ejecutar</button>
+              -->
+              <button type="submit" class="btn btn-primary px-4" [disabled]="!executionForm.valid || isExecuting">
+                Ejecutar
+                <span *ngIf="isExecuting">
+                  <i class="fa fa-spin fa-spinner"></i>
+                </span>
+              </button>
+              <button type="button" class="btn btn-danger px-4" [disabled]="!isExecuting" *ngIf="isExecuting" (click)="killProcess()">
+                Cancelar Proceso <i class="fa fa-close"></i>
+              </button>
+              <br/>
+
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="card">
+        <div class="card-header">
+          <strong>Log:</strong>
+        </div>
+        <div class="card-body bg-dark logger p-2">
+          <pre class="text-white">{{ logs }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

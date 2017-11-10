@@ -1,0 +1,4 @@
+executions/*
+node_modules/*
+datasets/*
+.RData

@@ -1,0 +1,26 @@
+{
+  "name": "r-loader",
+  "version": "0.0.1",
+  "description": "A tool to run R-Scripts.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "start-dev": "DEBUG=rscripts:server nodemon ./bin/www"
+  },
+  "keywords": [
+    "R"
+  ],
+  "author": "Bruno Faúndez Valenzuela",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mkdirp": "^0.5.1",
+    "nodemon": "^1.12.1",
+    "r-script": "0.0.3",
+    "shortid": "^2.2.8",
+    "underscore": "^1.8.3",
+    "ws": "^3.3.1"
+  }
+}
