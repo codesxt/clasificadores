@@ -4,3 +4,8 @@
   max-height: 300px;
   overflow-y: scroll;
 }
+
+// Hides outline on clicked navigation items
+a, a:active, a:focus {
+  outline: none;
+}

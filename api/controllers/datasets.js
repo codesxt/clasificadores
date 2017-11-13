@@ -12,3 +12,17 @@ module.exports.getDatasets = (req, res) => {
     data: fileList
   })
 }
+
+module.exports.deleteDataset = (req, res) => {
+  let datasetName = req.params.datasetName;
+  fs.unlink(appDir+"/datasets/"+datasetName, (err) => {
+    if(err){
+      console.log(error);
+      utils.sendJSONresponse(res, 500, {
+        message: "No se pudo eliminar el archivo."
+      });
+    }else{
+      utils.sendJSONresponse(res, 200, {});
+    }
+  })
+}
