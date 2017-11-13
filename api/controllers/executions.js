@@ -6,6 +6,7 @@ const { spawn } = require('child_process')
 const _ = require("underscore")
 
 var clientManager = require('../../clients');
+const coresManager = require('../../controllers/cores-manager');
 
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
@@ -97,6 +98,8 @@ createExcecution = (id, dsDescription, algsConfig, dataset) => {
       console.log('Created folder : executions/'+id+'/outputs');
       // Crear archivos de descripción y configuración en la carpeta options
       dsDescription.out_folder = '"' + appDir + '/executions/'+id+'/outputs/"';
+      // Se actualiza la cantidad de cores disponibles
+      coresManager.requestCores(algsConfig.cores);
       description   = parseDescription(dsDescription);
       configuration = parseConfiguration(algsConfig);
       fs.writeFileSync('executions/'+id+'/options/description.txt', description);
@@ -135,6 +138,7 @@ createExcecution = (id, dsDescription, algsConfig, dataset) => {
         clientManager.messageToClient("Terminó la ejecución.", id);
         clientManager.signalToClient("FINISH", id);
         console.log("Terminó la ejecución " + id);
+        coresManager.releaseCores(algsConfig.cores);
       })
     }
   });

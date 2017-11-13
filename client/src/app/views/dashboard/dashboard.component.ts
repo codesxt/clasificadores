@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
   isExecuting : boolean = false;
   pid : string = null;
 
+  cores : number = 1;
+
   datasets        : any = [];
   samplingMethods : any = ['LOO'];
   algorithms      : any = [
@@ -65,6 +67,14 @@ export class DashboardComponent implements OnInit {
       }
       if(data.type=="pid"){
         this.pid = data.message;
+      }
+      if(data.type=="cores"){
+        this.cores = data.message;
+        this.executionForm.get('cores').setValidators([
+          Validators.required,
+          Validators.min(1),
+          Validators.max(this.cores)
+        ]);
       }
     });
 

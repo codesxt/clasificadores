@@ -12,6 +12,7 @@ const WebSocket = require('ws');
 var debug = require('debug')('rscripts:server');
 const os = require('os');
 const shortid = require('shortid');
+const coresManager = require('./controllers/cores-manager');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +43,10 @@ wss.on('connection', (ws, req) => {
   	message: "Conectado exitosamente al servidor WebSocket."
   }));
   ws.send(JSON.stringify({
+    type: "cores",
+  	message: coresManager.getAvailableCores()
+  }));
+  ws.send(JSON.stringify({
     type: "logId",
   	message: id
   }));
@@ -54,7 +59,7 @@ server.listen(process.env.PORT || 3001, () => {
   debug('WebSocket: Server started on port ' + (process.env.PORT || 3001));
 });
 
-debug('Number of CPUs Available: ' + os.cpus().length);
+debug('Number of CPUs Available: ' + coresManager.getAvailableCores());
 
 module.exports = app;
 
