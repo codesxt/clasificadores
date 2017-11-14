@@ -9,5 +9,6 @@ router.delete('/process/:pid', ctrlExecution.killProcess);
 
 router.get('/datasets', ctrlDatasets.getDatasets);
 router.delete('/dataset/:datasetName', ctrlDatasets.deleteDataset);
+router.post('/dataset', ctrlDatasets.uploadDataset);
 
 module.exports = router;

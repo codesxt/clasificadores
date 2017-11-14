@@ -62,38 +62,6 @@ server.listen(process.env.PORT || 3001, () => {
 
 debug('Number of CPUs Available: ' + coresManager.getAvailableCores());
 
-var multer = require('multer');
-
-var localStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './datasets/')
-  },
-  filename: function (req, file, cb) {
-    //var datetimestamp = Date.now();
-    //cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
-    cb(null, file.originalname);
-  }
-});
-
-var upload = multer({
-  storage: localStorage
-}).single('file');
-
-app.post('/upload', function (req, res, next) {
-     var path = '';
-     upload(req, res, function (err) {
-        if (err) {
-          // An error occurred when uploading
-          console.log(err);
-          return res.status(422).send("an Error occured")
-        }
-       // No error occured.
-        path = req.file.path;
-        return res.send("Upload Completed for "+path);
-  });
-})
-
-
 module.exports = app;
 
 

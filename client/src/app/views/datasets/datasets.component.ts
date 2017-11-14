@@ -59,7 +59,7 @@ export class DatasetsComponent implements OnInit {
       // uncomment this if you want to auto upload files when added
       const event: UploadInput = {
         type: 'uploadAll',
-        url: 'http://localhost:3000/upload',
+        url: 'http://localhost:3000/api/v1/dataset',
         method: 'POST',
         data: { foo: 'bar' }
       };
@@ -88,7 +88,7 @@ export class DatasetsComponent implements OnInit {
     console.log("Starting file upload...");
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://localhost:3000/upload',
+      url: 'http://localhost:3000/api/v1/dataset',
       method: 'POST',
       data: { foo: 'bar' }
     };

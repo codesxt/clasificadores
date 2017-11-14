@@ -134,10 +134,14 @@ createExcecution = (id, dsDescription, algsConfig, dataset) => {
         clientManager.messageToClient(text, id);
         clientManager.pidToClient(child.pid, id);
       });
-      child.on('exit', function() {
+      child.on('exit', function(code, signal) {
+        if(signal=='SIGTERM'){
+          console.log("Terminó la ejecución " + id + " de manera forzosa.");
+        }else{
+          console.log("Terminó la ejecución " + id + " de manera normal.");
+        }
         clientManager.messageToClient("Terminó la ejecución.", id);
         clientManager.signalToClient("FINISH", id);
-        console.log("Terminó la ejecución " + id);
         coresManager.releaseCores(algsConfig.cores);
       })
     }
