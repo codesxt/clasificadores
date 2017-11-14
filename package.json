@@ -17,6 +17,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mkdirp": "^0.5.1",
+    "multer": "^1.3.0",
     "nodemon": "^1.12.1",
     "r-script": "0.0.3",
     "shortid": "^2.2.8",

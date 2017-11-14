@@ -9,3 +9,16 @@
 a, a:active, a:focus {
   outline: none;
 }
+
+// Drag and drop file uploader
+.drop-container {
+  height: 100px;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #ccc;
+}
+.drop-container-text {
+  line-height: 100px;
+  text-align: center;
+  color: #ccc;
+}

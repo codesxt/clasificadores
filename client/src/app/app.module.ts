@@ -69,6 +69,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { CommonModule } from '@angular/common';
+import { NgUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   imports: [
@@ -78,7 +79,8 @@ import { CommonModule } from '@angular/common';
     TabsModule.forRoot(),
     ChartsModule,
     HttpModule,
-    CommonModule
+    CommonModule,
+    NgUploaderModule
   ],
   declarations: [
     AppComponent,

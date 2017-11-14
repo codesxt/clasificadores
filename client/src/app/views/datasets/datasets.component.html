@@ -35,7 +35,40 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Subir set de datos</h4>
-        <p class="card-text">Seleccione un archivo de set de datos para subir.</p>
+        <p class="card-text">Seleccione un archivo de set de datos para subirlo automáticamente.</p>
+
+        <label class="upload-button">
+          <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+        </label>
+
+        <p>O arrastre y suelte los archivos en el recuadro.</p>
+
+        <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+          <div class="drop-container-text" id="drop-zone">
+            Arrastre sus archivos aquí
+          </div>
+        </div>
+
+        <!--
+        <button type="button" class="btn btn-primary" (click)="startUpload()">
+          Subir archivos
+        </button>
+        -->
+
+        <span *ngFor="let f of files; let i = index;">
+          <div class="row">
+            <div class="col-md-6">
+              {{f.name}} {{f.progress.data.percentage}}
+            </div>
+            <div class="col-md-6">
+              <div class="progress">
+                <span class="progress-bar" [style.width]="f.progress.data.percentage + '%'"></span>
+              </div>
+              {{f.progress.data.percentage}}
+            </div>
+          </div>
+        </span>
+
       </div>
     </div>
   </div>
