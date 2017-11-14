@@ -55,19 +55,32 @@
         </button>
         -->
 
-        <span *ngFor="let f of files; let i = index;">
-          <div class="row">
-            <div class="col-md-6">
-              {{f.name}} {{f.progress.data.percentage}}
+        <div class="row" *ngFor="let f of files; let i = index;">
+          <div class="col-md-2">
+            <i class="fa fa-file fa-3x m-3 text-primary"></i>
+          </div>
+          <div class="col-md-10 p-2">
+            <div class="row pt-2 px-2">
+              <h6>
+                {{f.name}}
+                <small class="text-muted">({{humanizeBytes(f.size)}})</small>
+              </h6>
             </div>
-            <div class="col-md-6">
-              <div class="progress">
-                <span class="progress-bar" [style.width]="f.progress.data.percentage + '%'"></span>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="progress">
+                  <span class="progress-bar" [style.width]="f.progress.data.percentage + '%'"></span>
+                </div>
               </div>
-              {{f.progress.data.percentage}}
+              <div class="col-md-3">
+                {{f.progress.data.percentage}}%
+              </div>
+            </div>
+            <div class="row px-2">
+              {{f.progress.data.speedHuman}}
             </div>
           </div>
-        </span>
+        </div>
 
       </div>
     </div>
