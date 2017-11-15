@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.static(path.join(__dirname, 'client/dist')));
 app.use('/datasets', express.static(path.join(__dirname, 'datasets')));
+app.use('/results', express.static(path.join(__dirname, 'results')));
 app.use('/api/v1', api);
 
 var expressWs = require('express-ws')(app);

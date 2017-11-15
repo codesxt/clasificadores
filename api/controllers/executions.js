@@ -1,5 +1,5 @@
 const utils = require('./utils');
-const fs  = require("fs");
+const fs  = require("fs-extra");
 const shortid = require('shortid');
 const mkdirp = require('mkdirp');
 const { spawn } = require('child_process')
@@ -67,7 +67,7 @@ parseDescription = (description) => {
 }
 
 parseConfiguration = (configuration) => {
-  var algs = configuration.algorithms;
+  var algs = configuration.algorithms.slice(0);
   var lastAlg = algs.pop()
   var text = "";
   text += "normalizacion<-" + ((configuration.normalization) ? 'TRUE' : 'FALSE');
@@ -137,8 +137,47 @@ createExcecution = (id, dsDescription, algsConfig, dataset) => {
       child.on('exit', function(code, signal) {
         if(signal=='SIGTERM'){
           console.log("Terminó la ejecución " + id + " de manera forzosa.");
+          fs.remove('executions/'+id, err => {
+            if (err) return console.error(err);
+            console.log('Se eliminó la carpeta ' + 'executions/'+id);
+          })
         }else{
           console.log("Terminó la ejecución " + id + " de manera normal.");
+          //  Generar un ID único para el resultado
+          var resultId = shortid.generate();
+          fs.move('executions/'+id+'/outputs', 'results/'+resultId, err => {
+            fs.remove('executions/'+id, err => {
+              if (err) return console.error(err);
+              console.log('Se eliminó la carpeta ' + 'executions/'+id);
+            })
+            if (err) return console.error(err);
+            console.log('Se guardaron los resultados en la carpeta ' + 'results/'+id);
+
+            // Solución momentánea para mantener un registro de los resultados generados
+            // (antes de implementar una base de datos)
+            let resultsDB = null;
+            if(fs.pathExistsSync('results/db.json')){
+              resultsDB = fs.readJsonSync('results/db.json');
+            }else{
+              resultsDB = [];
+            }
+
+            let resultData = {
+              id            : resultId,
+              dataset       : dataset,
+              description   : dsDescription,
+              configuration : algsConfig,
+              date          : new Date()
+            }
+
+            resultsDB.push(resultData);
+            fs.writeJsonSync('results/db.json', resultsDB);
+            // Enviar información de resultados al cliente
+            clientManager.toClient({
+              type : "resultdata",
+              data : resultData
+            }, id);
+          })
         }
         clientManager.messageToClient("Terminó la ejecución.", id);
         clientManager.signalToClient("FINISH", id);

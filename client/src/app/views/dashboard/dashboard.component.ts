@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   logId  : string = "";
   isExecuting : boolean = false;
   pid : string = null;
+  resultData : any = null;
 
   cores : number = 1;
 
@@ -75,6 +76,15 @@ export class DashboardComponent implements OnInit {
           Validators.min(1),
           Validators.max(this.cores)
         ]);
+      }
+      if(data.type=="resultdata"){
+        this.resultData = data.data;
+        this.executionService.getResultsByID(this.resultData.id)
+        .subscribe(
+          data => {
+            this.resultData.files = data.data;
+          }
+        )
       }
     });
 

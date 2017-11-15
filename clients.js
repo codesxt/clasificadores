@@ -50,3 +50,8 @@ module.exports.pidToClient = (pid, id) => {
     message : pid
   }))
 }
+
+module.exports.toClient = (obj, id) => {
+  var i = connectionIds.indexOf(id);
+  clients[i].send(JSON.stringify(obj))
+}
