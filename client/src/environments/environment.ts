@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3100'
+  apiUrl: 'http://localhost:3100',
+  wsockURL: 'ws://localhost:3101'
 };
