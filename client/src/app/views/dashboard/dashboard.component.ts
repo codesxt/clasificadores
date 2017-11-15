@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit {
     private websocketService : WebsocketService,
     private formBuilder      : FormBuilder
   ) {
+    console.log("BaseURL:" + this.baseURL);
+    console.log("WS URL :" + this.wsockURL);
   }
 
   ngOnInit(){
