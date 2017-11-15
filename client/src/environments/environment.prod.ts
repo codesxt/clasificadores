@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'clasificadores/api',
+  apiUrl: 'clasificadores',
   wsockURL: '/ws'
 };
