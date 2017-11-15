@@ -40,4 +40,13 @@ export class ResultsComponent implements OnInit {
       }
     )
   }
+
+  deleteResult(resultID : any){
+    this.executionService.deleteResultsByID(resultID)
+    .subscribe(
+      data => {
+        this.getData();
+      }
+    )
+  }
 }

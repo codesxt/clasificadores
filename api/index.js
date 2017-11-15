@@ -14,5 +14,6 @@ router.post('/dataset', ctrlDatasets.uploadDataset);
 
 router.get('/result/:id', ctrlResults.getResultsByID);
 router.get('/results', ctrlResults.getAllResults);
+router.delete('/result/:id', ctrlResults.deleteResultsByID);
 
 module.exports = router;

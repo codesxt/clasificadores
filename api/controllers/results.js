@@ -29,3 +29,22 @@ module.exports.getAllResults = (req, res) => {
     })
   }
 }
+
+module.exports.deleteResultsByID = (req, res) => {
+  let id = req.params.id;
+  let file = "./results/db.json";
+  if(fs.pathExistsSync(file)){
+    resultsDB = fs.readJsonSync('results/db.json');
+  }else{
+    resultsDB = [];
+  }
+  resultsDB = resultsDB.filter((obj) => {
+    return obj.id !== id;
+  });
+  fs.writeJsonSync('results/db.json', resultsDB);
+  fs.remove('results/'+id, err => {
+    if (err) return console.error(err);
+    console.log('Se eliminó la carpeta ' + 'results/'+id);
+  })
+  utils.sendJSONresponse(res, 200, {})
+}

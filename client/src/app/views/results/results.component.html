@@ -4,7 +4,10 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Resultados Disponibles</h4>
-        <table class="table table-sm">
+        <span *ngIf="results.length==0">
+          No hay resultados generados aún.
+        </span>
+        <table class="table table-sm" *ngIf="results.length>0">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -19,6 +22,9 @@
               <td>
                 <button type="button" class="btn btn-primary btn-sm" (click)="selectResultset(r)">
                   <i class="fa fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteResult(r.id)">
+                  <i class="fa fa-trash"></i>
                 </button>
               </td>
             </tr>

@@ -74,6 +74,18 @@ export class ExecutionService {
     )
   }
 
+  deleteResultsByID(resultsID: any): any{
+    let headers = new Headers({
+
+    });
+    let options = new RequestOptions({
+      headers: headers
+    });
+    return this.http.delete(this.baseURL+'/api/v1/result/'+resultsID, options).map(
+      (response: Response) =>response.json()
+    )
+  }
+
   getAllResults(): any{
     let headers = new Headers({
 
