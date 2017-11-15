@@ -1,0 +1,149 @@
+<div class="animated fadeIn">
+  <div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Resultados Disponibles</h4>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Dataset</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of results">
+              <td>{{r.date}}</td>
+              <td>{{r.dataset}}</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="selectResultset(r)">
+                  <i class="fa fa-eye"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Archivos de Resultados</h4>
+        <span *ngIf="!selectedResult">
+          Seleccione un resultado de la izquierda para ver detalles.
+        </span>
+        <span *ngIf="selectedResult">
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Dataset</strong>
+            </div>
+            <div class="col-md-9">
+              {{selectedResult.dataset}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Configuración</strong>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-5">
+                  Normalización
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.configuration.normalization}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  Paralelización
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.configuration.paralelization}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  Cores
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.configuration.cores}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  Muestreo
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.configuration.sampling}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Descripción Set de Datos</strong>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-5">
+                  Encabezado
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.description.has_header}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  Columna de Clase
+                </div>
+                <div class="col-md-7">
+                  {{selectedResult.description.class_col}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Algoritmos</strong>
+            </div>
+            <div class="col-md-9">
+              <div class="row" *ngFor="let a of selectedResult.configuration.algorithms">
+                <div class="col-md-12">
+                  {{a}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Término Ejecución</strong>
+            </div>
+            <div class="col-md-9">
+              {{selectedResult.date}}
+            </div>
+          </div>
+          <hr>
+          <div class="row" *ngIf="resultFiles">
+            <div class="col-md-3">
+              <strong>Archivos de Resultados</strong>
+            </div>
+            <div class="col-md-9">
+              <span *ngFor="let r of resultFiles">
+                <i class="fa fa-file text-primary"></i>
+                <a href="http://localhost:3000/results/{{selectedResult.id}}/{{r}}" target="_blank">{{r}}</a><br/>
+              </span>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

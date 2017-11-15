@@ -13,5 +13,6 @@ router.delete('/dataset/:datasetName', ctrlDatasets.deleteDataset);
 router.post('/dataset', ctrlDatasets.uploadDataset);
 
 router.get('/result/:id', ctrlResults.getResultsByID);
+router.get('/results', ctrlResults.getAllResults);
 
 module.exports = router;

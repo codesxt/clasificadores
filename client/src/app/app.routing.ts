@@ -27,6 +27,10 @@ export const routes: Routes = [
       {
         path: 'datasets',
         loadChildren: './views/datasets/datasets.module#DatasetsModule'
+      },
+      {
+        path: 'results',
+        loadChildren: './views/results/results.module#ResultsModule'
       }
     ]
   }

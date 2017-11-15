@@ -73,4 +73,16 @@ export class ExecutionService {
       (response: Response) =>response.json()
     )
   }
+
+  getAllResults(): any{
+    let headers = new Headers({
+
+    });
+    let options = new RequestOptions({
+      headers: headers
+    });
+    return this.http.get(this.baseURL+'/api/v1/results', options).map(
+      (response: Response) =>response.json()
+    )
+  }
 }

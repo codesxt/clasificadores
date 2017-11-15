@@ -14,5 +14,18 @@ module.exports.getResultsByID = (req, res) => {
       })
     }
   })
+}
 
+module.exports.getAllResults = (req, res) => {
+  let file = "./results/db.json";
+  if(fs.pathExistsSync(file)){
+    resultsDB = fs.readJsonSync('results/db.json');
+    utils.sendJSONresponse(res, 200, {
+      data: resultsDB
+    })
+  }else{
+    utils.sendJSONresponse(res, 200, {
+      data: []
+    })
+  }
 }
