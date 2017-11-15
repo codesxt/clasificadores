@@ -1,12 +1,14 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExecutionService } from '../../services/execution';
+import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: 'results.component.html',
   providers: [ ]
 })
 export class ResultsComponent implements OnInit {
+  baseURL: string = environment.apiUrl;
   results        : any[] = [];
   selectedResult : any;
   resultFiles    : any[] = [];

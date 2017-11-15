@@ -3,12 +3,14 @@ import { Router } from '@angular/router';
 import { ExecutionService } from '../../services/execution';
 import { WebsocketService } from '../../services/websocket';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: 'dashboard.component.html',
   providers: [ WebsocketService ]
 })
 export class DashboardComponent implements OnInit {
+  baseURL: string = environment.apiUrl;
   logger : any = null;
   logs   : string = "";
   logId  : string = "";
@@ -53,7 +55,7 @@ export class DashboardComponent implements OnInit {
       algorithms     : [null, Validators.required]
     })
 
-    this.logger = this.websocketService.connect('ws://localhost:3001')
+    this.logger = this.websocketService.connect('ws://localhost:3101')
 		.map((response) => {
 			let data = JSON.parse(response.data);
 			return data;

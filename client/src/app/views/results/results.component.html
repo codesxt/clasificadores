@@ -143,7 +143,7 @@
             <div class="col-md-9">
               <span *ngFor="let r of resultFiles">
                 <i class="fa fa-file text-primary"></i>
-                <a href="http://localhost:3000/results/{{selectedResult.id}}/{{r}}" target="_blank">{{r}}</a><br/>
+                <a href="{{baseURL}}/results/{{selectedResult.id}}/{{r}}" target="_blank">{{r}}</a><br/>
               </span>
             </div>
           </div>

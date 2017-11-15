@@ -136,7 +136,7 @@
                   <div class="card-body">
                     <span *ngFor="let r of resultData.files">
                       <i class="fa fa-file text-primary"></i>
-                      <a href="http://localhost:3000/results/{{resultData.id}}/{{r}}" target="_blank">{{r}}</a><br/>
+                      <a href="{{baseURL}}/results/{{resultData.id}}/{{r}}" target="_blank">{{r}}</a><br/>
                     </span>
                   </div>
                 </div>

@@ -57,30 +57,10 @@ wss.on('connection', (ws, req) => {
   })
 });
 
-server.listen(process.env.PORT || 3001, () => {
-  debug('WebSocket: Server started on port ' + (process.env.PORT || 3001));
+server.listen(process.env.PORT || 3101, () => {
+  debug('WebSocket: Server started on port ' + (process.env.PORT || 3101));
 });
 
 debug('Number of CPUs Available: ' + coresManager.getAvailableCores());
 
 module.exports = app;
-
-
-/*
-var datasetName         = "./datasets/set_datos_mg_15_mejores.csv";
-var datasetDescription  = "./descriptions/descripcion_set_datos.txt";
-var configuration       = "./configurations/configuracion.txt";
-*/
-
-/*
-var lastChange = "";
-fs.watch('outputs/testing/', (event, file) => {
-  var change = event + " in : " + file;
-  if(change != lastChange){
-    console.log(change);
-    lastChange = change;
-  }
-  fs.readdir('outputs/testing/', (err, files) => {
-    console.log(files.length + " files counted.");
-  });
-})*/
