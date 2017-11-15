@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'clasificadores',
+  apiUrl: 'http://heladas.utalca.cl/clasificadores',
   wsockURL: '/ws'
 };
