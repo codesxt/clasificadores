@@ -70,6 +70,10 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { CommonModule } from '@angular/common';
 import { NgUploaderModule } from 'ngx-uploader';
+import { MomentModule } from 'angular2-moment';
+
+import * as moment from 'moment';
+moment.locale('es-cl');
 
 @NgModule({
   imports: [
@@ -80,7 +84,8 @@ import { NgUploaderModule } from 'ngx-uploader';
     ChartsModule,
     HttpModule,
     CommonModule,
-    NgUploaderModule
+    NgUploaderModule,
+    MomentModule
   ],
   declarations: [
     AppComponent,

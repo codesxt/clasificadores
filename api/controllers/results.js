@@ -21,7 +21,7 @@ module.exports.getAllResults = (req, res) => {
   if(fs.pathExistsSync(file)){
     resultsDB = fs.readJsonSync('results/db.json');
     utils.sendJSONresponse(res, 200, {
-      data: resultsDB
+      data: resultsDB.reverse()
     })
   }else{
     utils.sendJSONresponse(res, 200, {
