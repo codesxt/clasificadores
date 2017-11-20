@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ExecutionService } from '../../services/execution';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { environment } from '../../../environments/environment';
 
 @Component({
   templateUrl: 'datasets.component.html',
@@ -10,6 +11,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 })
 export class DatasetsComponent implements OnInit {
   // Variables para la subida de archivos
+  uploadUrl = environment.uploadUrl;
   options: UploaderOptions;
   formData: FormData;
   files: UploadFile[];
@@ -59,7 +61,7 @@ export class DatasetsComponent implements OnInit {
       // uncomment this if you want to auto upload files when added
       const event: UploadInput = {
         type: 'uploadAll',
-        url: 'http://localhost:3000/api/v1/dataset',
+        url: this.uploadUrl,
         method: 'POST',
         data: { foo: 'bar' }
       };
@@ -88,7 +90,7 @@ export class DatasetsComponent implements OnInit {
     console.log("Starting file upload...");
     const event: UploadInput = {
       type: 'uploadAll',
-      url: 'http://localhost:3000/api/v1/dataset',
+      url: this.uploadUrl,
       method: 'POST',
       data: { foo: 'bar' }
     };

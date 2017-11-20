@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3100',
-  wsockURL: 'ws://localhost:3101'
+  wsockURL: 'ws://localhost:3101',
+  uploadUrl: 'http://localhost:3100/api/v1/dataset'
 };
