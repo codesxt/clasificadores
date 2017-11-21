@@ -20,10 +20,14 @@ module.exports.removeClient = (ws) => {
 
 module.exports.messageToClient = (message, id) => {
   var i = connectionIds.indexOf(id);
-  clients[i].send(JSON.stringify({
-    type    : "log",
-    message : message
-  }))
+  if(clients[i] !== undefined){
+    clients[i].send(JSON.stringify({
+      type    : "log",
+      message : message
+    }))
+  }else{
+    debug("Error: attempting to message a non existing client.")
+  }
 }
 
 module.exports.broadcastMessage = (message) => {
@@ -37,21 +41,35 @@ module.exports.broadcastMessage = (message) => {
 
 module.exports.signalToClient = (signal, id) => {
   var i = connectionIds.indexOf(id);
-  clients[i].send(JSON.stringify({
-    type    : "signal",
-    message : signal
-  }))
+  if(clients[i] !== undefined){
+    clients[i].send(JSON.stringify({
+      type    : "signal",
+      message : signal
+    }))
+  }else{
+    debug("Error: attempting to message a non existing client.")
+  }
 }
 
 module.exports.pidToClient = (pid, id) => {
   var i = connectionIds.indexOf(id);
-  clients[i].send(JSON.stringify({
-    type    : "pid",
-    message : pid
-  }))
+  var i = connectionIds.indexOf(id);
+  if(clients[i] !== undefined){
+    clients[i].send(JSON.stringify({
+      type    : "pid",
+      message : pid
+    }))
+  }else{
+    debug("Error: attempting to message a non existing client.")
+  }
 }
 
 module.exports.toClient = (obj, id) => {
   var i = connectionIds.indexOf(id);
-  clients[i].send(JSON.stringify(obj))
+  var i = connectionIds.indexOf(id);
+  if(clients[i] !== undefined){
+    clients[i].send(JSON.stringify(obj));
+  }else{
+    debug("Error: attempting to message a non existing client.")
+  }
 }
