@@ -15,6 +15,11 @@ export class WebsocketService {
     return this.subject;
   }
 
+  public reconnect(url): Rx.Subject<MessageEvent> {
+    this.subject = this.create(url);
+    return this.subject;
+  }
+
   private create(url): Rx.Subject<MessageEvent> {
     let ws = new WebSocket(url);
 

@@ -18,6 +18,14 @@ module.exports.removeClient = (ws) => {
   }
 }
 
+module.exports.setLogId = (ws, id) => {
+  // Forcefully set log id (used for reconnections to active logs)
+  var i = clients.indexOf(ws);
+  if(i != -1) {
+    connectionIds[i] = id;
+  }
+}
+
 module.exports.messageToClient = (message, id) => {
   var i = connectionIds.indexOf(id);
   if(clients[i] !== undefined){
@@ -53,7 +61,6 @@ module.exports.signalToClient = (signal, id) => {
 
 module.exports.pidToClient = (pid, id) => {
   var i = connectionIds.indexOf(id);
-  var i = connectionIds.indexOf(id);
   if(clients[i] !== undefined){
     clients[i].send(JSON.stringify({
       type    : "pid",
@@ -66,10 +73,19 @@ module.exports.pidToClient = (pid, id) => {
 
 module.exports.toClient = (obj, id) => {
   var i = connectionIds.indexOf(id);
-  var i = connectionIds.indexOf(id);
   if(clients[i] !== undefined){
     clients[i].send(JSON.stringify(obj));
   }else{
     debug("Error: attempting to message a non existing client.")
   }
 }
+
+/*
+// Block used to test client reconnection capabilities
+setInterval(() => {
+  for(let c of clients){
+    debug("Killing connection to WebSocket.");
+    c.terminate();
+  }
+}, 5000)
+*/

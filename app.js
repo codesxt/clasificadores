@@ -52,6 +52,13 @@ wss.on('connection', (ws, req) => {
     type: "logId",
   	message: id
   }));
+  ws.on('message', function incoming(message) {
+    console.log('Received: %s', message);
+    let parsed = JSON.parse(message);
+    if(parsed.type=='SETLOGID'){
+      clientManager.setLogId(ws, parsed.message);
+    }
+  });
   ws.on('close', () => {
     clientManager.removeClient(ws);
   })

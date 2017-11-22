@@ -4,6 +4,12 @@ import { ExecutionService } from '../../services/execution';
 import { WebsocketService } from '../../services/websocket';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { Subject } from 'rxjs/Rx';
+
+export interface Message {
+	type: string,
+	message: string
+}
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -42,8 +48,6 @@ export class DashboardComponent implements OnInit {
     private websocketService : WebsocketService,
     private formBuilder      : FormBuilder
   ) {
-    console.log("BaseURL:" + this.baseURL);
-    console.log("WS URL :" + this.wsockURL);
   }
 
   ngOnInit(){
@@ -59,39 +63,7 @@ export class DashboardComponent implements OnInit {
     })
 
     this.logger = this.websocketService.connect(this.wsockURL)
-		.map((response) => {
-			let data = JSON.parse(response.data);
-			return data;
-    })
-    .subscribe(data => {
-      if(data.type=="log")   this.log(data.message);
-      if(data.type=="logId") this.logId = data.message;
-      if(data.type=="signal"){
-        if(data.message=="FINISH"){
-          this.isExecuting = false;
-        }
-      }
-      if(data.type=="pid"){
-        this.pid = data.message;
-      }
-      if(data.type=="cores"){
-        this.cores = data.message;
-        this.executionForm.get('cores').setValidators([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(this.cores)
-        ]);
-      }
-      if(data.type=="resultdata"){
-        this.resultData = data.data;
-        this.executionService.getResultsByID(this.resultData.id)
-        .subscribe(
-          data => {
-            this.resultData.files = data.data;
-          }
-        )
-      }
-    });
+    this.configureWebsocket();
 
     // Get dataset list
     this.executionService.getDatasets()
@@ -104,14 +76,79 @@ export class DashboardComponent implements OnInit {
       }
     )
 
+    // Set initial values in form
     this.executionForm.patchValue({
       sampling   : this.samplingMethods[0],
       algorithms : [this.algorithms[0]]
     });
   }
 
-  executeAlgorithms(){
+  connectWebsocket(){
+    this.logger = this.websocketService.reconnect(this.wsockURL)
+  }
 
+  configureWebsocket(){
+    this.logger
+		.map((response) => {
+			let data = JSON.parse(response.data);
+			return data;
+    })
+    .subscribe(
+      data => {
+        if(data.type=="log")   this.log(data.message);
+        if(data.type=="logId") {
+          if(this.logId){
+            this.logger.next({
+              type    : 'SETLOGID',
+              message : this.logId
+            })
+          }else{
+            this.logId = data.message;
+          }
+        };
+        if(data.type=="signal"){
+          if(data.message=="FINISH"){
+            this.isExecuting = false;
+          }
+        }
+        if(data.type=="pid"){
+          this.pid = data.message;
+        }
+        if(data.type=="cores"){
+          this.cores = data.message;
+          this.executionForm.get('cores').setValidators([
+            Validators.required,
+            Validators.min(1),
+            Validators.max(this.cores)
+          ]);
+        }
+        if(data.type=="resultdata"){
+          this.resultData = data.data;
+          this.executionService.getResultsByID(this.resultData.id)
+          .subscribe(
+            data => {
+              this.resultData.files = data.data;
+            }
+          )
+        }
+      },
+      error => {
+        console.log("There has been an error. Details: " + JSON.stringify(error));
+      },
+      () => {
+        console.log("Connection with the server has ended.");
+        console.log("Attempting to reconnect.");
+        this.connectWebsocket();
+        this.configureWebsocket();
+      }
+    );
+  }
+
+  messageToServer(message: string){
+    console.log("Talking to server.");
+    this.logger.next({
+      message:message
+    });
   }
 
   doExecution(){
