@@ -11,7 +11,8 @@ import { environment } from '../../../environments/environment';
 })
 export class DatasetsComponent implements OnInit {
   // Variables para la subida de archivos
-  uploadUrl = environment.uploadUrl;
+  uploadUrl : string = environment.uploadUrl;
+  baseUrl   : string = environment.apiUrl;
   options: UploaderOptions;
   formData: FormData;
   files: UploadFile[];

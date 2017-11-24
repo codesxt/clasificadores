@@ -14,7 +14,7 @@
           <tbody>
             <tr *ngFor="let d of datasets">
               <td>
-                <a href="http://localhost:3000/datasets/{{d}}" target="_blank">
+                <a href="{{baseUrl}}/datasets/{{d}}" target="_blank">
                   <i class="fa fa-file-text"></i>
                   {{d}}
                 </a>
@@ -35,10 +35,8 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Subir set de datos</h4>
-        <p class="card-text">
-          Seleccione un archivo de set de datos para subirlo automáticamente
-          <small>(si sube un archivo del mismo nombre que uno existente, se sobrescribirá)</small>.
-        </p>
+        <p class="card-text">Seleccione un archivo de set de datos para subirlo automáticamente .</p>
+        <p class="card-text"></p>
 
         <label class="upload-button">
           <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
